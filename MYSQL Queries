@@ -4,11 +4,15 @@ Covid data queries that will later be used to create visualizations.
 
 */ 
 
+
+
 -- all relevant data in coviddeaths table. 
 
 SELECT *
 FROM coviddeaths
 WHERE continent IS NOT NULL; 
+
+
 
 -- Order of days with highest death percentage in USA, shows death rate on any given day in USA, ordered by percentage.
 
@@ -18,6 +22,8 @@ WHERE location LIKE '%states%' AND continent IS NOT NULL
 ORDER BY DeathPercentage DESC;
 
 
+
+
 -- Total cases vs population, percentage of population with coivd for given date, ordered by infection rate percentage
 
 SELECT *, (totalCases/population)*100 AS PopulationInfectedPercentage
@@ -25,12 +31,17 @@ FROM coviddeaths
 WHERE location LIKE '%states%' AND continent IS NOT NULL
 ORDER BY PopulationInfectedPercentage DESC;
 
+
+
+
 -- Countries with highest infection rates 
 
 SELECT location, population, MAX(totalCases) AS MaxInfectedCount, MAX((totalCases/population))*100 AS PopulationInfectedPercentage
 FROM coviddeaths
 GROUP BY location, population
 ORDER BY PopulationInfectedPercentage DESC;
+
+
 
 -- Countries and continents with greatest number of deaths
 
@@ -40,6 +51,9 @@ WHERE continent IS NOT NULL AND location IS NOT NULL
 GROUP BY location
 ORDER BY DeathCount DESC;
 
+
+
+
 -- Continents with highest deathrates
 
 SELECT continent, MAX(totalDeaths) AS DeathCount
@@ -47,6 +61,8 @@ FROM coviddeaths
 WHERE continent IS NOT NULL AND location IS NOT NULL
 GROUP BY continent
 ORDER BY DeathCount DESC;
+
+
 
 
 -- Rolling vaccination amount by date, by country
